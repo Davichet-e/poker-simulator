@@ -8,8 +8,6 @@ from colorama import Fore, Style
 
 
 class Card(NamedTuple):
-    """Implement a playing card"""
-
     name: Deck.CardName
     suit: str
 
@@ -22,9 +20,7 @@ class Card(NamedTuple):
 
 
 class Deck:
-    """Implement the standard 52-card deck.
-    The number of cards that contains is defined
-    by 52 times the `n_decks` parameter"""
+    """Implement a standard 52-card deck."""
 
     class Suit(Enum):
         CLUBS = "♣"

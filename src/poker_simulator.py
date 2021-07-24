@@ -14,7 +14,7 @@ class Poker(ABC):
         ...
 
     @abstractmethod
-    def resolve(self) -> None:
+    def resolve(self) -> Hand:
         ...
 
 
@@ -38,12 +38,11 @@ class ClassicPoker(Poker):
 
 if __name__ == "__main__":
     init(autoreset=True)
-    print(f"Be welcomed to {Fore.GREEN}Poker Simulator{Style.RESET_ALL}.")
+    print(f"Be welcome to {Fore.GREEN}Poker Simulator{Style.RESET_ALL}.")
     n_players = 3
     print(f"Nº of selected players: {n_players}")
     poker = ClassicPoker(n_players)
     poker.deal()
     print(poker.resolve())
-    print("test 2")
     deinit()
 
