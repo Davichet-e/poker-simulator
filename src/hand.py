@@ -22,6 +22,9 @@ class Kind(IntEnum):
     STRAIGHT_FLUSH = auto()
     ROYAL_FLUSH = auto()
 
+    def __repr__(self) -> str:
+        return self.name
+
 
 @total_ordering
 class Hand:
@@ -32,10 +35,10 @@ class Hand:
     def __gt__(self, other: Hand) -> bool:
         return self.play > other.play
 
-    def __eq__(self, other: Hand):
+    def __eq__(self, other: Hand) -> bool:
         return self.play == other.play
 
-    def __str__(self):
+    def __str__(self) -> str:
         cards_as_str: List[str] = [f"{card}" for card in self.cards]
         return ", ".join(cards_as_str)
 
