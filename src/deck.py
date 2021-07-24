@@ -1,19 +1,24 @@
+from __future__ import annotations
+
 import random
+from enum import Enum, IntEnum, auto
 from typing import ClassVar, Dict, List, NamedTuple, Tuple
+
+from colorama import Fore, Style
 
 
 class Card(NamedTuple):
     """Implement a playing card"""
 
-    name: str
+    name: Deck.CardName
     suit: str
 
     def __str__(self) -> str:
-        return f"{self.name} of {self.suit}"
+        return f"{self.name.name} of {self.suit}"
 
     @property
     def value(self) -> int:
-        return Deck.CARDS[self.name]
+        return self.name.value
 
 
 class Deck:
@@ -21,29 +26,30 @@ class Deck:
     The number of cards that contains is defined
     by 52 times the `n_decks` parameter"""
 
-    SUITS: ClassVar[Tuple[str, ...]] = ("♣", "♥", "♠", "♦")
-    CARDS: ClassVar[Dict[str, int]] = dict(
-        ACE=11,
-        TWO=2,
-        THREE=3,
-        FOUR=4,
-        FIVE=5,
-        SIX=6,
-        SEVEN=7,
-        EIGHT=8,
-        NINE=9,
-        TEN=10,
-        JACK=10,
-        QUEEN=10,
-        KING=10,
-    )
+    class Suit(Enum):
+        CLUBS = "♣"
+        HEARTS = "♥"
+        PIKES = "♠"
+        DIAMONDS = "♦"
 
-    def __init__(self, n_decks: int):
+    class CardName(IntEnum):
+        TWO = auto()
+        THREE = auto()
+        FOUR = auto()
+        FIVE = auto()
+        SIX = auto()
+        SEVEN = auto()
+        EIGHT = auto()
+        NINE = auto()
+        TEN = auto()
+        JACK = auto()
+        QUEEN = auto()
+        KING = auto()
+        ACE = auto()
+
+    def __init__(self):
         self._deck: List[Card] = [
-            Card(card_name, suit)
-            for suit in Deck.SUITS
-            for card_name in Deck.CARDS
-            for _ in range(n_decks)
+            Card(card, suit.value) for suit in Deck.Suit for card in Deck.CardName
         ]
         random.shuffle(self._deck)
 
@@ -57,7 +63,8 @@ class Deck:
         """Returns a random card of the deck."""
         # If the deck is empty, initialize it
         if not self._deck:
-            raise ValueError("The deck is empty. GAME OVER.")
+            print(f"Deck {Fore.RED}empty{Style.RESET_ALL}, shuffling a new one.")
+            self = Deck()
         return self._deck.pop()
 
     def get_initial_cards(self) -> List[Card]:
