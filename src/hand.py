@@ -29,8 +29,17 @@ class Kind(IntEnum):
 @total_ordering
 class Hand:
     def __init__(self, deck: Deck) -> None:
-        self.cards = [deck.deal_card() for _ in range(5)]
-        self.play: Tuple[Kind, List[Card]] = Hand.calculate_hand_value(self.cards)
+        self._cards = [deck.deal_card() for _ in range(5)]
+        self._play: Tuple[Kind, List[Card]] = Hand.calculate_hand_value(self.cards)
+
+    @property
+    def cards(self) -> List[Card]:
+        return self._cards
+
+    @property
+    def play(self) -> Tuple[Kind, List[Card]]:
+        """Returns a tuple representing what kind is the hand and the important cards in case of a draw"""
+        return self._play
 
     def __gt__(self, other: Hand) -> bool:
         return self.play > other.play
@@ -53,7 +62,7 @@ class Hand:
 
         most_common_cards: List[Tuple[Card, int]] = name_counter.most_common(5)
         most_common_card, n_occurrences_most_common = most_common_cards[0]
-        # This helps to decide given a draw (e.g. given two different three of a kind, which would win.)
+        # This helps to decide given a draw (e.g. given two different three of a kind), which would win.
         hand_cards_value: List[Card]
 
         kind: Kind
@@ -74,9 +83,10 @@ class Hand:
 
             else:
                 kind = Kind.DOUBLE_PAIR
+                # This checks first the highest cards of the pairs, and then of the non-matching card
                 hand_cards = sorted(
                     [card.value for card, _ in most_common_cards[:2]], reverse=True
-                )
+                ) + [most_common_cards[2][0].value]
 
         elif len(name_counter) == 4:
             kind = Kind.PAIR
@@ -90,11 +100,12 @@ class Hand:
 
         else:
             # This checks the cards are increasingly monotonic by 1
-            straight = {-1} == {
+            straight = {1} == {
                 x[1] - x[0] for x in zip(sorted_card_values[1:], sorted_card_values)
             }
             if len(suit_counter) == 1:
-                if min_card_value.name == "10":
+                # This checks that the minimum card is 10, so it must mean that the rest of the values form a royal flush
+                if min_card_value == 9:
                     kind = Kind.ROYAL_FLUSH
 
                 elif straight:

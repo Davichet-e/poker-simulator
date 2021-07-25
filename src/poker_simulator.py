@@ -41,6 +41,7 @@ if __name__ == "__main__":
     init(autoreset=True)
     while True:
         print(f"Be welcome to {Fore.GREEN}Poker Simulator.\n")
+        # TODO Ask number of players interactively
         n_players = 3
         print(f"Nº of selected players: {n_players}")
         poker = ClassicPoker(n_players)
