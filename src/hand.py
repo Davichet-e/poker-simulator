@@ -29,15 +29,15 @@ class Kind(IntEnum):
 @total_ordering
 class Hand:
     def __init__(self, deck: Deck) -> None:
-        self._cards = [deck.deal_card() for _ in range(5)]
-        self._play: Tuple[Kind, List[Card]] = Hand.calculate_hand_value(self.cards)
+        self._cards: List[Card] = [deck.deal_card() for _ in range(5)]
+        self._play: Tuple[Kind, List[int]] = Hand.calculate_hand_value(self.cards)
 
     @property
     def cards(self) -> List[Card]:
         return self._cards
 
     @property
-    def play(self) -> Tuple[Kind, List[Card]]:
+    def play(self) -> Tuple[Kind, List[int]]:
         """Returns a tuple representing what kind is the hand and the important cards in case of a draw"""
         return self._play
 
@@ -52,18 +52,18 @@ class Hand:
         return ", ".join(cards_as_str)
 
     @staticmethod
-    def calculate_hand_value(cards: List[Card]) -> Tuple[Kind, List[Card]]:
-        """Returns which kind the hand is and its highest cards' values"""
+    def calculate_hand_value(cards: List[Card]) -> Tuple[Kind, List[int]]:
+        """Returns which kind the hand is and the necessary cards' values to break the tie if necessary"""
         sorted_card_values = sorted([card.value for card in cards], reverse=True)
         min_card_value = sorted_card_values[-1]
 
         suit_counter: Counter[str] = Counter([card.suit for card in cards])
         name_counter: Counter[Card] = Counter([card.name for card in cards])
 
-        most_common_cards: List[Tuple[Card, int]] = name_counter.most_common(5)
+        most_common_cards: List[Tuple[Deck.CardName, int]] = name_counter.most_common(5)
         most_common_card, n_occurrences_most_common = most_common_cards[0]
         # This helps to decide given a draw (e.g. given two different three of a kind), which would win.
-        hand_cards_value: List[Card]
+        hand_cards_value: List[int]
 
         kind: Kind
         # We compare how many kinds of card are there

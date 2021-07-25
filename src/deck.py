@@ -60,9 +60,5 @@ class Deck:
         # If the deck is empty, initialize it
         if not self._deck:
             print(f"Deck {Fore.RED}empty{Style.RESET_ALL}, shuffling a new one.")
-            self = Deck()
+            self.__init__()
         return self._deck.pop()
-
-    def get_initial_cards(self) -> List[Card]:
-        """Returns 2 random cards of the deck"""
-        return [self._deck.pop(), self._deck.pop()]
