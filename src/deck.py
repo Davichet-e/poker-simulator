@@ -4,7 +4,7 @@ import random
 from enum import Enum, IntEnum, auto
 from typing import ClassVar, Dict, List, NamedTuple, Tuple
 
-from colorama import Fore, Style
+from colorama import Back, Fore, Style
 
 
 class Card(NamedTuple):
@@ -23,10 +23,10 @@ class Deck:
     """Implement a standard 52-card deck."""
 
     class Suit(Enum):
-        CLUBS = "♣"
-        HEARTS = "♥"
-        PIKES = "♠"
-        DIAMONDS = "♦"
+        CLUBS = f"{Back.WHITE}{Fore.BLACK}♣{Style.RESET_ALL}"
+        HEARTS = f"{Back.WHITE}{Fore.RED}♥{Style.RESET_ALL}"
+        PIKES = f"{Back.WHITE}{Fore.BLACK}♠{Style.RESET_ALL}"
+        DIAMONDS = f"{Back.WHITE}{Fore.RED}♦{Style.RESET_ALL}"
 
     class CardName(IntEnum):
         TWO = auto()
@@ -57,8 +57,6 @@ class Deck:
 
     def deal_card(self) -> Card:
         """Returns a random card of the deck."""
-        # If the deck is empty, initialize it
         if not self._deck:
-            print(f"Deck {Fore.RED}empty{Style.RESET_ALL}, shuffling a new one.")
-            self.__init__()
+            raise ValueError("Deck empty, this should never be reached!")
         return self._deck.pop()
