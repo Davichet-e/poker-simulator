@@ -63,6 +63,7 @@ class Hand:
         most_common_cards: List[Tuple[Deck.CardName, int]] = name_counter.most_common(5)
         most_common_card, n_occurrences_most_common = most_common_cards[0]
         # This helps to decide given a draw (e.g. given two different three of a kind), which would win.
+        # See this: https://www.pokerhands.com/poker_hand_tie_rules.html
         hand_cards_value: List[int]
 
         kind: Kind

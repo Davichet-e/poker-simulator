@@ -1,7 +1,7 @@
 """A simple poker simulator."""
 
 from abc import ABC, abstractmethod
-from typing import Tuple
+from typing import Tuple, List
 
 from colorama import Fore, Style, deinit, init
 
@@ -32,9 +32,21 @@ class ClassicPoker(Poker):
             print(f"Which is a: {hand.play[0].name}\n\n")
             self.hands.append(hand)
 
-    def resolve(self) -> Tuple[int, Hand]:
-        """Return a tuple which represents the winning player with its hand"""
-        return max(enumerate(self.hands, start=1), key=lambda tuple_: tuple_[1].play)
+    def resolve(self) -> Tuple[Tuple[int, Hand], List[int]]:
+        """Return a tuple which represents the winning player with its hand
+        and a list with the players that have tied with"""
+        sorted_hands = sorted(
+            enumerate(self.hands, start=1),
+            key=lambda tuple_: tuple_[1].play,
+            reverse=True,
+        )
+        tied_players = []
+        for player, hand in sorted_hands[1:]:
+            if hand == sorted_hands[0][1]:
+                tied_players.append(player)
+            else:
+                break
+        return (sorted_hands[0], tied_players)
 
 
 if __name__ == "__main__":
@@ -46,28 +58,31 @@ if __name__ == "__main__":
         while True:
             try:
                 n_players = int(
-                    input(
-                        "\nHow many players are going to play? (Use only numbers)\n> "
-                    )
+                    input("\nHow many players are going to play? (1-10)\n> ")
                 )
 
             except ValueError:
                 print("Please, use only integer values.\n")
 
             else:
-                if 0 < n_players <= 999:
+                if 0 < n_players <= 10:
                     break
                 else:
-                    print("Please, only 1-999 players")
+                    print("Please, only 1-10 players")
 
         print(f"\nNº of selected players: {n_players}\n")
 
         poker = ClassicPoker(n_players)
         poker.deal()
-        winner_player, winner_hand = poker.resolve()
-        print(
-            f"The winner is player {winner_player} ({winner_hand}) [{winner_hand.play[0].name}]"
-        )
+        (winner_player, winner_hand), tied_players = poker.resolve()
+        if tied_players:
+            print(
+                f"There is a draw between players: {', '.join([winner_player] + tied_players)}"
+            )
+        else:
+            print(
+                f"The winner is player {winner_player} ({winner_hand}) [{winner_hand.play[0].name}]"
+            )
 
         decision: str = input(f"\nDo you want to play another round? (y/n)\n> ")
 

@@ -4,7 +4,7 @@ from src.deck import Card, Deck
 from src.hand import Hand, Kind
 
 
-class TestHand(unittest.TestCase):
+class TestKindHand(unittest.TestCase):
     def test_high_card(self):
         self.assertEqual(
             Hand.calculate_hand_value(
@@ -202,6 +202,96 @@ class TestHand(unittest.TestCase):
                     Card(Deck.CardName.JACK, "♦").value,
                     Card(Deck.CardName.TEN, "♦").value,
                 ],
+            ),
+        )
+
+
+class TestTiedHand(unittest.TestCase):
+    def test_pair_tie(self):
+        self.assertEqual(
+            Hand.calculate_hand_value(
+                [
+                    Card(Deck.CardName.ACE, "♥"),
+                    Card(Deck.CardName.TWO, "♥"),
+                    Card(Deck.CardName.TWO, "♣"),
+                    Card(Deck.CardName.FIVE, "♦"),
+                    Card(Deck.CardName.TEN, "♥"),
+                ]
+            ),
+            Hand.calculate_hand_value(
+                [
+                    Card(Deck.CardName.ACE, "♦"),
+                    Card(Deck.CardName.TWO, "♦"),
+                    Card(Deck.CardName.TWO, "♥"),
+                    Card(Deck.CardName.FIVE, "♣"),
+                    Card(Deck.CardName.TEN, "♦"),
+                ]
+            ),
+        )
+
+    def test_straight_tie(self):
+        self.assertEqual(
+            Hand.calculate_hand_value(
+                [
+                    Card(Deck.CardName.TWO, "♦"),
+                    Card(Deck.CardName.THREE, "♣"),
+                    Card(Deck.CardName.FOUR, "♣"),
+                    Card(Deck.CardName.FIVE, "♠"),
+                    Card(Deck.CardName.SIX, "♦"),
+                ]
+            ),
+            Hand.calculate_hand_value(
+                [
+                    Card(Deck.CardName.TWO, "♠"),
+                    Card(Deck.CardName.THREE, "♦"),
+                    Card(Deck.CardName.FOUR, "♦"),
+                    Card(Deck.CardName.FIVE, "♦"),
+                    Card(Deck.CardName.SIX, "♠"),
+                ]
+            ),
+        )
+
+    def test_flush_tie(self):
+        self.assertEqual(
+            Hand.calculate_hand_value(
+                [
+                    Card(Deck.CardName.TWO, "♦"),
+                    Card(Deck.CardName.TEN, "♦"),
+                    Card(Deck.CardName.FOUR, "♦"),
+                    Card(Deck.CardName.ACE, "♦"),
+                    Card(Deck.CardName.SIX, "♦"),
+                ]
+            ),
+            Hand.calculate_hand_value(
+                [
+                    Card(Deck.CardName.TWO, "♠"),
+                    Card(Deck.CardName.TEN, "♠"),
+                    Card(Deck.CardName.FOUR, "♠"),
+                    Card(Deck.CardName.ACE, "♠"),
+                    Card(Deck.CardName.SIX, "♠"),
+                ]
+            ),
+        )
+
+    def test_royal_flush_tie(self):
+        self.assertEqual(
+            Hand.calculate_hand_value(
+                [
+                    Card(Deck.CardName.TEN, "♣"),
+                    Card(Deck.CardName.JACK, "♣"),
+                    Card(Deck.CardName.QUEEN, "♣"),
+                    Card(Deck.CardName.KING, "♣"),
+                    Card(Deck.CardName.ACE, "♣"),
+                ]
+            ),
+            Hand.calculate_hand_value(
+                [
+                    Card(Deck.CardName.TEN, "♦"),
+                    Card(Deck.CardName.JACK, "♦"),
+                    Card(Deck.CardName.QUEEN, "♦"),
+                    Card(Deck.CardName.KING, "♦"),
+                    Card(Deck.CardName.ACE, "♦"),
+                ]
             ),
         )
 
