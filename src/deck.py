@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import random
 from enum import Enum, IntEnum, auto
-from typing import ClassVar, Dict, List, NamedTuple, Tuple
+from typing import List, NamedTuple
 
 from colorama import Back, Fore, Style
 

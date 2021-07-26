@@ -3,29 +3,34 @@
 from abc import ABC, abstractmethod
 from typing import Tuple, List
 
-from colorama import Fore, Style, deinit, init
+from colorama import Fore, deinit, init
 
 from .deck import Deck
 from .hand import Hand
 
 
 class Poker(ABC):
+    """Represents the basic structure for a Poker Simulation game"""
+
     def __init__(self, n_players: int) -> None:
         self.n_players = n_players
         self.deck = Deck()
         self.hands = []
 
     @abstractmethod
-    def deal(self) -> None:
+    def deal(self):
         ...
 
     @abstractmethod
-    def resolve(self) -> Tuple[int, Hand]:
+    def resolve(self):
         ...
 
 
 class ClassicPoker(Poker):
+    """Represent the variant Classic Poker for simulation"""
+
     def deal(self) -> None:
+        """Gives each player their hand and print them to console"""
         for i in range(self.n_players):
             hand = Hand(self.deck)
             print(f"The hand of player {i + 1} is: {hand}")
@@ -77,18 +82,18 @@ if __name__ == "__main__":
         (winner_player, winner_hand), tied_players = poker.resolve()
         if tied_players:
             print(
-                f"There is a draw between players: {', '.join([str(winner_player)] + list(map(str, tied_players)))}"
+                "There is a draw between players: "
+                f"{', '.join([str(winner_player)] + list(map(str, tied_players)))}"
             )
         else:
             print(
                 f"The winner is player {winner_player} ({winner_hand}) [{winner_hand.play[0].name}]"
             )
 
-        decision: str = input(f"\nDo you want to play another round? (y/n)\n> ")
+        decision: str = input("\nDo you want to play another round? (y/n)\n> ")
 
         if decision.strip().lower() not in {"y", "yes", "1", "true"}:
             break
 
     print(f"\n{Fore.YELLOW}Thanks for playing!")
     deinit()
-

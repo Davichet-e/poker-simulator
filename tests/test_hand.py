@@ -82,7 +82,7 @@ class TestKindHand(unittest.TestCase):
                     Card(Deck.CardName.FIVE, "♠"),
                 ]
             ),
-            (Kind.THREE_OF_A_KIND, [Card(Deck.CardName.TWO, "♦").value,],),
+            (Kind.THREE_OF_A_KIND, [Card(Deck.CardName.TWO, "♦").value]),
         )
 
     def test_straight(self):
@@ -142,7 +142,7 @@ class TestKindHand(unittest.TestCase):
                     Card(Deck.CardName.FIVE, "♠"),
                 ]
             ),
-            (Kind.FULL_HOUSE, [Card(Deck.CardName.TWO, "♣").value,],),
+            (Kind.FULL_HOUSE, [Card(Deck.CardName.TWO, "♣").value]),
         )
 
     def test_four_of_a_kind(self):
@@ -156,7 +156,7 @@ class TestKindHand(unittest.TestCase):
                     Card(Deck.CardName.FIVE, "♠"),
                 ]
             ),
-            (Kind.FOUR_OF_A_KIND, [Card(Deck.CardName.TWO, "♦").value,],),
+            (Kind.FOUR_OF_A_KIND, [Card(Deck.CardName.TWO, "♦").value]),
         )
 
     def test_straight_flush(self):

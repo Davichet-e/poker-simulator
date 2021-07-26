@@ -68,7 +68,7 @@ class Hand:
         most_common_card, n_occurrences_most_common = most_common_cards[0]
         # This helps to decide given a draw (e.g. given two different three of a kind), which would win.
         # See this: https://www.pokerhands.com/poker_hand_tie_rules.html
-        hand_cards_value: List[int]
+        hand_cards_values: List[int]
 
         kind: Kind
         # We compare how many kinds of card are there
@@ -79,24 +79,24 @@ class Hand:
             else:
                 kind = Kind.FULL_HOUSE
 
-            hand_cards = [most_common_card.value]
+            hand_cards_values = [most_common_card.value]
 
         elif len(name_counter) == 3:
             if n_occurrences_most_common == 3:
                 kind = Kind.THREE_OF_A_KIND
-                hand_cards = [most_common_card.value]
+                hand_cards_values = [most_common_card.value]
 
             else:
                 kind = Kind.DOUBLE_PAIR
                 # This checks first the highest cards of the pairs, and then of the non-matching card
-                hand_cards = sorted(
+                hand_cards_values = sorted(
                     [card.value for card, _ in most_common_cards[:2]], reverse=True
                 ) + [most_common_cards[2][0].value]
 
         elif len(name_counter) == 4:
             kind = Kind.PAIR
 
-            hand_cards = [
+            hand_cards_values = [
                 most_common_card.value,
                 *sorted(
                     set(sorted_card_values) - {most_common_card.value}, reverse=True
@@ -125,6 +125,6 @@ class Hand:
             else:
                 kind = Kind.HIGH_CARD
 
-            hand_cards = sorted_card_values
+            hand_cards_values = sorted_card_values
 
-        return (kind, hand_cards)
+        return (kind, hand_cards_values)
