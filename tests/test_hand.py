@@ -19,11 +19,11 @@ class TestKindHand(unittest.TestCase):
             (
                 Kind.HIGH_CARD,
                 [
-                    Card(Deck.CardName.ACE, "♦").value,
-                    Card(Deck.CardName.TEN, "♦").value,
-                    Card(Deck.CardName.FIVE, "♣").value,
-                    Card(Deck.CardName.FOUR, "♣").value,
-                    Card(Deck.CardName.TWO, "♦").value,
+                    Deck.CardName.ACE,
+                    Deck.CardName.TEN,
+                    Deck.CardName.FIVE,
+                    Deck.CardName.FOUR,
+                    Deck.CardName.TWO,
                 ],
             ),
         )
@@ -42,10 +42,10 @@ class TestKindHand(unittest.TestCase):
             (
                 Kind.PAIR,
                 [
-                    Card(Deck.CardName.TWO, "♦").value,
-                    Card(Deck.CardName.ACE, "♦").value,
-                    Card(Deck.CardName.TEN, "♦").value,
-                    Card(Deck.CardName.FIVE, "♣").value,
+                    Deck.CardName.TWO,
+                    Deck.CardName.ACE,
+                    Deck.CardName.TEN,
+                    Deck.CardName.FIVE,
                 ],
             ),
         )
@@ -63,11 +63,7 @@ class TestKindHand(unittest.TestCase):
             ),
             (
                 Kind.DOUBLE_PAIR,
-                [
-                    Card(Deck.CardName.FIVE, "♣").value,
-                    Card(Deck.CardName.TWO, "♦").value,
-                    Card(Deck.CardName.ACE, "♦").value,
-                ],
+                [Deck.CardName.FIVE, Deck.CardName.TWO, Deck.CardName.ACE,],
             ),
         )
 
@@ -82,7 +78,7 @@ class TestKindHand(unittest.TestCase):
                     Card(Deck.CardName.FIVE, "♠"),
                 ]
             ),
-            (Kind.THREE_OF_A_KIND, [Card(Deck.CardName.TWO, "♦").value]),
+            (Kind.THREE_OF_A_KIND, [Deck.CardName.TWO]),
         )
 
     def test_straight(self):
@@ -99,11 +95,11 @@ class TestKindHand(unittest.TestCase):
             (
                 Kind.STRAIGHT,
                 [
-                    Card(Deck.CardName.SIX, "♦").value,
-                    Card(Deck.CardName.FIVE, "♠").value,
-                    Card(Deck.CardName.FOUR, "♣").value,
-                    Card(Deck.CardName.THREE, "♣").value,
-                    Card(Deck.CardName.TWO, "♦").value,
+                    Deck.CardName.SIX,
+                    Deck.CardName.FIVE,
+                    Deck.CardName.FOUR,
+                    Deck.CardName.THREE,
+                    Deck.CardName.TWO,
                 ],
             ),
         )
@@ -122,11 +118,11 @@ class TestKindHand(unittest.TestCase):
             (
                 Kind.FLUSH,
                 [
-                    Card(Deck.CardName.ACE, "♦").value,
-                    Card(Deck.CardName.TEN, "♦").value,
-                    Card(Deck.CardName.SIX, "♦").value,
-                    Card(Deck.CardName.FOUR, "♦").value,
-                    Card(Deck.CardName.TWO, "♦").value,
+                    Deck.CardName.ACE,
+                    Deck.CardName.TEN,
+                    Deck.CardName.SIX,
+                    Deck.CardName.FOUR,
+                    Deck.CardName.TWO,
                 ],
             ),
         )
@@ -142,7 +138,7 @@ class TestKindHand(unittest.TestCase):
                     Card(Deck.CardName.FIVE, "♠"),
                 ]
             ),
-            (Kind.FULL_HOUSE, [Card(Deck.CardName.TWO, "♣").value]),
+            (Kind.FULL_HOUSE, [Deck.CardName.TWO]),
         )
 
     def test_four_of_a_kind(self):
@@ -156,7 +152,7 @@ class TestKindHand(unittest.TestCase):
                     Card(Deck.CardName.FIVE, "♠"),
                 ]
             ),
-            (Kind.FOUR_OF_A_KIND, [Card(Deck.CardName.TWO, "♦").value]),
+            (Kind.FOUR_OF_A_KIND, [Deck.CardName.TWO]),
         )
 
     def test_straight_flush(self):
@@ -173,11 +169,11 @@ class TestKindHand(unittest.TestCase):
             (
                 Kind.STRAIGHT_FLUSH,
                 [
-                    Card(Deck.CardName.SIX, "♦").value,
-                    Card(Deck.CardName.FIVE, "♦").value,
-                    Card(Deck.CardName.FOUR, "♦").value,
-                    Card(Deck.CardName.THREE, "♦").value,
-                    Card(Deck.CardName.TWO, "♦").value,
+                    Deck.CardName.SIX,
+                    Deck.CardName.FIVE,
+                    Deck.CardName.FOUR,
+                    Deck.CardName.THREE,
+                    Deck.CardName.TWO,
                 ],
             ),
         )
@@ -196,11 +192,11 @@ class TestKindHand(unittest.TestCase):
             (
                 Kind.ROYAL_FLUSH,
                 [
-                    Card(Deck.CardName.ACE, "♦").value,
-                    Card(Deck.CardName.KING, "♦").value,
-                    Card(Deck.CardName.QUEEN, "♦").value,
-                    Card(Deck.CardName.JACK, "♦").value,
-                    Card(Deck.CardName.TEN, "♦").value,
+                    Deck.CardName.ACE,
+                    Deck.CardName.KING,
+                    Deck.CardName.QUEEN,
+                    Deck.CardName.JACK,
+                    Deck.CardName.TEN,
                 ],
             ),
         )
