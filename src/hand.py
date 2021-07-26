@@ -42,9 +42,13 @@ class Hand:
         return self._play
 
     def __gt__(self, other: Hand) -> bool:
+        if not isinstance(other, Hand):
+            return NotImplemented
         return self.play > other.play
 
     def __eq__(self, other: Hand) -> bool:
+        if not isinstance(other, Hand):
+            return NotImplemented
         return self.play == other.play
 
     def __str__(self) -> str:

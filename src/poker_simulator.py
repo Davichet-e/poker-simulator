@@ -77,7 +77,7 @@ if __name__ == "__main__":
         (winner_player, winner_hand), tied_players = poker.resolve()
         if tied_players:
             print(
-                f"There is a draw between players: {', '.join([winner_player] + tied_players)}"
+                f"There is a draw between players: {', '.join([str(winner_player)] + list(map(str, tied_players)))}"
             )
         else:
             print(
